@@ -4,6 +4,10 @@
 
 :root {
   font-family: Helvetica, Arial, sans-serif;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #003b28;
+  color: #003b28;
+  background-color: #ffffff;
+}
+
+.clickable-div {
+  cursor: pointer;
 }
