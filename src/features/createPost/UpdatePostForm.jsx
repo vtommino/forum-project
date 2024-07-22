@@ -66,7 +66,7 @@ function UpdatePostForm({ onSuccess, data }) {
   };
 
   return (
-    <>
+    <div className="text-tertiary">
       <Modal
         title="Edit post"
         width="55"
@@ -81,7 +81,7 @@ function UpdatePostForm({ onSuccess, data }) {
           ref={fileEl}
           onChange={handleImageChange}
         />
-        <form className="flex flex-col gap-4">
+        <form className="flex flex-col gap-4 text-tertiary">
           <div className="flex flex-col p-1 gap-2">
             <div className="flex flex-col gap-2 bg-tertiary text-white rounded-xl p-5 ">
               <div className="flex gap-32">
@@ -105,7 +105,7 @@ function UpdatePostForm({ onSuccess, data }) {
               </div>
             </div>
             <div className="flex justify-between items-center font-semibold">
-              <div className="flex items-center gap-2 pl-3 text-lg">
+              <div className="flex text-tertiary items-center gap-2 pl-3 text-lg">
                 <img
                   src="/src/images/user-avatar1.png"
                   alt="user-avatar1"
@@ -203,7 +203,7 @@ function UpdatePostForm({ onSuccess, data }) {
           </div>
         </form>
       </Modal>
-    </>
+    </div>
   );
 }
 

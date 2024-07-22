@@ -4,6 +4,8 @@ import useThread from "../hooks/useThread";
 
 import SelectInput from "./SelectInput";
 import ThreadPostList from "./ThreadPostList";
+import useAuth from "../hooks/useAuth";
+import Spinner from "./Spinner";
 
 const searchGroupType = [
   { title: "Search...", value: "search" },
@@ -14,23 +16,21 @@ const searchGroupType = [
   { title: "Search all", value: "all" },
 ];
 
-function ThreadPostBox({ threadId }) {
+function ThreadPostBox() {
   const { thread, forumName } = useThread();
-  // const { forum } = useForum();
-  // const forumDetail = forum.find(
-  //   (item) => item.thread[0].id === thread[0].threadId
-  // );
-  // // const { } = useParams()
-  // const threadDetail = forumDetail.thread.find(
-  //   (item)
-  // )
-  // console.log(forumDetail);
-  // console.log(forum);
-  // console.log(thread);
 
+  const { forum } = useForum();
+
+  const { authUser } = useAuth();
+
+  if (!thread) {
+    return <Spinner />;
+  }
+  console.log(forum);
+  console.log(thread.post);
   return (
     <>
-      <div className=" flex pt-3 items-center text-black pl-5 pr-5 pb-3 justify-between ">
+      <div className=" flex pt-3 items-center text-black pl-5 pr-5 pb-2 justify-between ">
         <div>
           <SelectInput
             input={searchGroupType}
@@ -38,28 +38,39 @@ function ThreadPostBox({ threadId }) {
           />
         </div>
 
-        <div className="flex justify-center items-center gap-8">
-          <div className="text-black hover:text-secondary">Log out</div>
-          <div className="h-12 bg-white text-black text-xs pl-3 pr-5 rounded-lg flex justify-between items-center">
+        <div className="flex justify-center items-center ">
+          <div className="h-12 bg-yellow-100 text-black text-xs pl-3 pr-5 rounded-full font-semibold flex justify-between items-center">
             <img
-              src="/src/images/user-avatar1.png"
+              src={authUser?.coverImage}
               alt="user-avatar1"
-              className="w-12 h-12 bg-white p-2 rounded-lg"
+              className="w-12 h-12  p-2 rounded-full"
             />
-            Hi, user2323
+            Hi, {authUser?.userName}!
           </div>
         </div>
       </div>
+      <div className="text-tertiary text-right pr-6 hover:text-secondary cursor-pointer text-xs underline">
+        Log out
+      </div>
 
-      <div className="bg-green-900 w-full rounded-lg pl-3 pr-3 pt-1 pb-3 text-white my-3">
-        <div className="flex gap-2 pt-2 pl-2 font-semibold ">
-          <div>Forum Type : </div> <div> {forumName} </div>
+      <div className="bg-green-900 w-full rounded-lg pl-3 pr-3 p-1 pb-3 text-white my-2">
+        <div className="flex items-center p-2 gap-2">
+          <div>
+            <img
+              src={thread.threadIcon}
+              alt={thread.threadTitle}
+              className="w-[51px] h-[51px] bg-yellow-100 p-2 rounded-lg"
+            />
+          </div>
+          <div className="flex flex-col pt-2 pl-2 justify-center ">
+            <div>Forum Type : {thread.forum.name} </div>
+            <div>Room: {thread.threadTitle} </div>
+          </div>
         </div>
-        <div className="flex text-sm gap-2 pl-2 pb-1 ">
-          <div>Room: </div> <div>{}</div>
-        </div>
-        {thread.length > 0 &&
-          thread.map((item) => <ThreadPostList key={item.id} data={item} />)}
+        {thread.post.length > 0 &&
+          thread.post.map((item) => {
+            return <ThreadPostList key={item.id} data={item} />;
+          })}
       </div>
     </>
   );

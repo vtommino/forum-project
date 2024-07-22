@@ -29,11 +29,11 @@ export default function Modal({
     <>
       {open ? (
         <>
-          <div className="fixed inset-0 bg-gray-900 opacity-40 z-30"></div>
-          <div className="fixed inset-0 z-40" onClick={onClose}>
+          <div className="fixed inset-0 bg-gray-900 opacity-40 z-30 "></div>
+          <div className="fixed inset-0 z-40 " onClick={onClose}>
             <div className="flex justify-center items-center min-h-screen pt-8">
               <div
-                className="bg-yellow-100 rounded-2xl shadow-lg p-4"
+                className="bg-yellow-100 rounded-2xl shadow-lg p-4 overflow-auto max-h-[70vh]"
                 style={{ width: `${width}rem` }}
                 onClick={(e) => e.stopPropagation()}
               >

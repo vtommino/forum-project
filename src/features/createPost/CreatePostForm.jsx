@@ -6,15 +6,22 @@ import postApi from "../../api/post";
 import { useRef } from "react";
 import { toast } from "react-toastify";
 import Spinner from "../../components/Spinner";
+import useAuth from "../../hooks/useAuth";
+import useForum from "../../hooks/useForum";
 
 function CreatePostForm({ onSuccess }) {
   const [topic, setTopic] = useState("");
   const [content, setContent] = useState("");
-  const [image, setImage] = useState(null); //ShowInClientSite
-  const [imageFile, setImageFile] = useState(null); //toBackEnd
+  const [image, setImage] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { thread, fetchThreadById } = useThread();
+  const { authUser } = useAuth();
+  const { forum } = useForum();
+
+  const { forumName, thread, fetchThreadById } = useThread();
+  console.log(forum);
+  console.log(forum.name);
 
   const fileEl = useRef();
 
@@ -35,7 +42,7 @@ function CreatePostForm({ onSuccess }) {
       setIsLoading(true);
       const formData = new FormData();
 
-      formData.append("threadId", thread[0].threadId);
+      formData.append("threadId", thread.id);
       formData.append("postTitle", topic);
       formData.append("postDescription", content);
       if (imageFile) {
@@ -43,7 +50,7 @@ function CreatePostForm({ onSuccess }) {
       }
 
       const response = await postApi.createPost(formData);
-      await fetchThreadById(thread[0].threadId);
+      await fetchThreadById(thread.id);
 
       onSuccess();
       toast.success("Your post has been created.");
@@ -54,6 +61,7 @@ function CreatePostForm({ onSuccess }) {
       setIsLoading(false);
     }
   };
+  console.log(thread);
 
   return (
     <>
@@ -71,8 +79,7 @@ function CreatePostForm({ onSuccess }) {
               <div>Forum / Thread</div>
 
               <div>
-                Juristic / &nbsp; Rules & Regulations &nbsp;&#40;Thread
-                Name&#41;
+                {thread.forum.name}/ &nbsp; {thread.threadTitle}
               </div>
             </div>
             <div className="flex gap-32 items-center">
@@ -90,11 +97,11 @@ function CreatePostForm({ onSuccess }) {
           <div className="flex justify-between items-center font-semibold">
             <div className="flex items-center gap-2 pl-3 text-lg">
               <img
-                src="/src/images/user-avatar1.png"
+                src={authUser?.profileImage}
                 alt="user-avatar1"
-                className="w-12 h-12 p-2 rounded-lg"
+                className="w-12 h-12 p-2 rounded-full"
               />
-              User1234
+              {authUser?.userName}
             </div>
             <div className="flex">
               <img

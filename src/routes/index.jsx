@@ -13,7 +13,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <MainContainer />,
     children: [
-      // { path: "/admin", element: <AdminPage /> },
+      { path: "/admin", element: <AdminPage /> },
       { path: "/login", element: <LoginPage /> },
       { path: "/forum", element: <ForumMainPage /> },
       { path: "/forum/thread/:threadId", element: <ThreadPage /> },
@@ -22,11 +22,30 @@ const router = createBrowserRouter([
   },
 ]);
 
-//separate the route
-// path "user"
+// const router = createBrowserRouter([
+//   { path: "/", element: <LandingPage /> },
+//   { path: "/login", element: <LoginPage /> },
+//   { path: "/reset-password", element: <ResetPassword /> },
+//   { path: "/not-login", element: <NotLoginPage /> },
+//   { path: "/about-us", element: <AboutUs /> },
+//   { path: "/contact-us", element: <ContactUs /> },
 
-//Separate admin
-// { path: "/admin", element: <AdminPage /> },
+//   // path user
+
+//   // Path Forum
+//   {
+//     path: "/forum",
+//     element: <MainContainer />,
+//     children: [
+//       { path: "/", element: <ForumMainPage /> },
+//       { path: "/thread/:threadId", element: <ThreadPage /> },
+//       { path: "/thread/post/:postId", element: <PostPage /> },
+//     ],
+//   },
+
+//   //Path Admin
+//   { path: "/admin", element: <AdminPage /> },
+// ]);
 
 export default function Router() {
   return <RouterProvider router={router} />;

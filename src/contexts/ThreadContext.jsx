@@ -6,14 +6,15 @@ import threadApi from "../api/thread";
 export const ThreadContext = createContext();
 
 function ThreadContextProvider({ children }) {
-  const [thread, setThread] = useState([]);
+  const [thread, setThread] = useState(null);
   const [forumName, setForumName] = useState("");
+  const [threadInfo, setThreadInfo] = useState({});
 
   const fetchThreadById = async (id) => {
     try {
       const response = await threadApi.getThreadById(id);
-      console.log(response);
-      setThread(response.data.thread);
+      console.log(response.data);
+      setThread(response.data);
     } catch (err) {
       console.log(err);
     }
@@ -21,7 +22,14 @@ function ThreadContextProvider({ children }) {
 
   return (
     <ThreadContext.Provider
-      value={{ thread, fetchThreadById, forumName, setForumName }}
+      value={{
+        threadInfo,
+        setThreadInfo,
+        thread,
+        fetchThreadById,
+        forumName,
+        setForumName,
+      }}
     >
       {children}
     </ThreadContext.Provider>
